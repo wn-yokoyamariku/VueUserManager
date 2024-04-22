@@ -56,11 +56,12 @@ export default {
     <tbody v-for="user in storeUsers.registered_users" :key="user.id">
       <tr>
         <th scope="row">{{ user.id }}</th>
-        <td colspan="2">{{user.name}}</td>
+        <td>{{user.name}}</td>
         <td>{{ user.email }}</td>
         <td>{{user.address.street }}</td>
         <td>{{ user.phone}}</td>
         <td>{{ user.website }}</td>
+        <td>{{ user.company.name }}</td>
         <button>編集</button>
         <button @click="deleteOneUser(user.id)">削除</button>
       </tr>
