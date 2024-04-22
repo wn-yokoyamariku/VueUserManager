@@ -19,7 +19,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <nav>
-              <RouterLink to="/">Home</RouterLink>
+              <RouterLink to="/" class="home">Home</RouterLink>
               <RouterLink to="/about">Register</RouterLink>
             </nav>
           </div>
@@ -30,6 +30,8 @@
 </template>
 
 <style>
-.header {
+.home {
+    margin-left: 30px;
+    margin-right: 30px;
 }
 </style>
