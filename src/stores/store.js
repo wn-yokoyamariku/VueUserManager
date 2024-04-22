@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 
 export const useStoreUsers = defineStore({
   id: 'users',
@@ -14,7 +13,7 @@ export const useStoreUsers = defineStore({
   },
   actions: {
     initTable(users_list) {
-        this.registered_users = registered_users
+        this.registered_users = users_list
     },
     selectUser(id){
         return this.registered_users.filter((user) => user.id == id)
