@@ -29,8 +29,6 @@ export default {
     return { data, getData }
   }
 }
-
-
 </script>
 
 
