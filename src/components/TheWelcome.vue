@@ -24,7 +24,7 @@ export default {
 
     onMounted(() => {
       getData()
-      storeUsers(data.users);
+      storeUsers.initTable(data.users);
     })
     return { data, getData }
   }
