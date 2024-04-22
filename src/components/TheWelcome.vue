@@ -61,6 +61,7 @@ export default {
         <td>{{ user.address.street }}</td>
         <td>{{ user.phone }}</td>
         <td>{{ user.website }}</td>
+        <td>{{ user.company.name }}</td>
         <button>編集</button>
         <button @click="deleteOneUser(user.id)">削除</button>
       </tr>
