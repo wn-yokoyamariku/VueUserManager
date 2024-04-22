@@ -1,19 +1,23 @@
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
 export const useStoreUsers = defineStore({
   id: 'users',
   state: () => ({
     //id, name, email, address, phone, website, company
-    registered_users: [
+    registered_users: ref([
 
-    ]
+    ])
   }),
   getters: {
     //filterとか
   },
   actions: {
     initTable(users_list) {
-        this.registered_users = users_list
+      for (let i = 0; i < users_list.length; i++){
+        this.registered_users.push(users_list[i])
+      }
+        
     },
     selectUser(id){
         return this.registered_users.filter((user) => user.id == id)
@@ -36,8 +40,7 @@ export const useStoreUsers = defineStore({
     },
     // １件のタスクを削除する
     deleteUser(id) {
-      const new_incomp = this.incompleteTasks.filter((task) => task.id != id)
-      this.incompleteTasks = new_incomp
+      this.registered_users = this.registered_users.filter((task) => task.id != id)
     },
   }
 })
