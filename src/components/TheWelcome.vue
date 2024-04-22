@@ -1,6 +1,7 @@
 <script>
 import { useStoreUsers } from '@/stores/store'
 import axios from 'axios'
+import { onBeforeMount } from 'vue';
 import { reactive, onMounted } from 'vue'
 export default {
   setup() {
@@ -9,8 +10,11 @@ export default {
       title: 'JSON Placeholderからのユーザー情報取得',
       users: []
     })
-    const deleteTasks = (id) => {
+    const deleteOneUser = (id) => {
       storeUsers.deleteUser(id)
+    }
+    const init = (d) => {
+      storeUsers.initTable(d)
     }
     const getData = () => {
       let url = 'https://jsonplaceholder.typicode.com/users/'
@@ -19,14 +23,18 @@ export default {
 
         // reactiveな値を格納するための配列に代入する
         data.users = result.data
+        storeUsers.initTable(result.data)
       })
     }
-
-    onMounted(() => {
+    onBeforeMount(() => 
       getData()
-      storeUsers.initTable(data.users);
+    )
+    onMounted(() => {
+      console.log(data.users)
+      init(data.users)
+      console.log(storeUsers.registered_users)
     })
-    return { data, getData }
+    return { data, storeUsers, getData, deleteOneUser, init }
   }
 }
 
@@ -47,38 +55,16 @@ export default {
         <th scope="col">company</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody v-for="user in storeUsers.registered_users" :key="user.id">
       <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
+        <th scope="row">{{ user.id }}</th>
+        <td colspan="2">{{user.name}}</td>
+        <td>{{ user.email }}</td>
+        <td>{{user.address.street }}</td>
+        <td>{{ user.phone}}</td>
+        <td>{{ user.website }}</td>
         <button>編集</button>
-        <button>削除</button>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <button>編集</button>
-        <button>削除</button>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <button>編集</button>
-        <button>削除</button>
+        <button @click="deleteOneUser(user.id)">削除</button>
       </tr>
     </tbody>
   </table>
