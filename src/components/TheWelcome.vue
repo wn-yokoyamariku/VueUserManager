@@ -13,28 +13,28 @@ export default {
     const deleteOneUser = (id) => {
       storeUsers.deleteUser(id)
     }
-    const init = (d) => {
-      storeUsers.initTable(d)
-    }
     const getData = () => {
+        if (storeUsers.registered_users.length != 0) {
+          return
+        }
       let url = 'https://jsonplaceholder.typicode.com/users/'
       axios.get(url).then((result) => {
         console.log(result.data)
 
         // reactiveな値を格納するための配列に代入する
         data.users = result.data
-        storeUsers.initTable(result.data)
+          storeUsers.initTable(result.data)
+
       })
     }
-    onBeforeMount(() => 
+    onBeforeMount(() =>
       getData()
     )
     onMounted(() => {
       console.log(data.users)
-      init(data.users)
       console.log(storeUsers.registered_users)
     })
-    return { data, storeUsers, getData, deleteOneUser, init }
+    return { data, storeUsers, getData, deleteOneUser}
   }
 }
 </script>
@@ -56,10 +56,10 @@ export default {
     <tbody v-for="user in storeUsers.registered_users" :key="user.id">
       <tr>
         <th scope="row">{{ user.id }}</th>
-        <td colspan="2">{{user.name}}</td>
+        <td colspan="2">{{ user.name }}</td>
         <td>{{ user.email }}</td>
-        <td>{{user.address.street }}</td>
-        <td>{{ user.phone}}</td>
+        <td>{{ user.address.street }}</td>
+        <td>{{ user.phone }}</td>
         <td>{{ user.website }}</td>
         <button>編集</button>
         <button @click="deleteOneUser(user.id)">削除</button>
